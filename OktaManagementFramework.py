@@ -154,18 +154,20 @@ class OktaManagementFramework:
 
         return validate_api_token_exists
 
+    """
+    #work in progress
     def okta_rate_limit_backoff(retries=3):
         def decorator(func):
             def wrapper(self, *args, **kwargs):
                 try:
                     return func(self, *args, **kwargs)
                 except OktaRateLimitExceededError as e:
-                    """rate_limit_reset_ts_int: int = int(e.headers["x-rate-limit-reset"])
+                    rate_limit_reset_ts_int: int = int(e.headers["x-rate-limit-reset"])
                     time_to_wait: int = rate_limit_reset_ts_int - int(time.time())
                     self._logger.debug(f"Current time is {datetime.fromtimestamp(time.time(),tz=timezone.utc).strftime('%H:%M:%S %Y-%m-%d')} but rate limit does not reset until {datetime.fromtimestamp(rate_limit_reset_ts_int,tz=timezone.utc).strftime('%H:%M:%S %Y-%m-%d')}. Waiting until rate limit resets to continue")
                     self._logger.warning(f"Waiting {time_to_wait} seconds until rate limit resets.")
                     time.sleep(time_to_wait)
-                    return func(self, *args, **kwargs)"""
+                    return func(self, *args, **kwargs)
                 
                     current_retry = 0
                     self._logger.debug(
@@ -187,7 +189,7 @@ class OktaManagementFramework:
                         time.sleep(wait_period)
                         current_retry += 1
             return wrapper
-        return decorator
+        return decorator"""
 
     def rate_limit_backoff(delay=2, retries=3):
         def decorator(func):
@@ -1765,7 +1767,7 @@ class OktaManagementFramework:
             )
             raise error
 
-    @okta_rate_limit_backoff(retries=6)
+    @rate_limit_backoff(retries=6)
     def get_rules_by_policy_id(self, policy_id: str) -> list:
         self._logger.debug(f"Getting all policy rules for policy id {policy_id}")
         full_url = f"https://{self._okta_domain}.okta.com/api/v1/policies/{policy_id}/rules"
@@ -1915,7 +1917,7 @@ class OktaManagementFramework:
     ###########################################################################
     # SECTION OF CODE TO FETCH SYSTEM LOGS
     ###########################################################################
-    @okta_rate_limit_backoff(retries=5)
+    @rate_limit_backoff(retries=5)
     def get_okta_system_log_events(
         self,
         since: None | str = None,
