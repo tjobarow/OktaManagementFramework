@@ -701,6 +701,7 @@ class OktaManagementFramework:
 
         return user_factors
 
+    #TODO Change parameter to user id
     @validate_attrs_present
     @rate_limit_backoff(delay=1, retries=5)
     def fetch_user_factors(self, user: dict) -> list[dict]:
@@ -1017,6 +1018,7 @@ class OktaManagementFramework:
         )
         return users_with_devices
 
+    #TODO Change parameters to user ID
     @rate_limit_backoff(delay=1, retries=5)
     def fetch_devices_for_user(self, user: dict) -> list[dict]:
         self._logger.debug(f"Fetching devices for user {user['id']}")
@@ -1642,6 +1644,7 @@ class OktaManagementFramework:
             f"Created sign_on_policies_lookup_table with length {len(sign_on_policies_lookup_table)}"
         )
 
+    #TODO update parameter to app id
     def fetch_app_sign_on_policy(self, app_details: dict) -> dict:
         """_summary_
 
@@ -1692,6 +1695,7 @@ class OktaManagementFramework:
             self._logger.error(str(req_error))
             raise req_error
 
+    #TODO update parameters to only need app id and policy id
     def update_app_sign_on_policy(
         self, application_object: dict, policy_object: dict
     ) -> bool:
