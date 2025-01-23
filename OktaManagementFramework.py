@@ -701,14 +701,13 @@ class OktaManagementFramework:
 
         return user_factors
 
-    #TODO Change parameter to user id
     @validate_attrs_present
     @rate_limit_backoff(delay=1, retries=5)
-    def fetch_user_factors(self, user: dict) -> list[dict]:
-        self._logger.debug(f"Fetching enrolled factors for user {user['id']}")
+    def fetch_user_factors(self, user_id: str) -> list[dict]:
+        self._logger.debug(f"Fetching enrolled factors for user {user_id}")
 
         full_url = (
-            f"https://{self._okta_domain}.okta.com/api/v1/users/{user['id']}/factors"
+            f"https://{self._okta_domain}.okta.com/api/v1/users/{user_id}/factors"
         )
 
         payload = {}
@@ -732,22 +731,22 @@ class OktaManagementFramework:
                 )
             elif len(response.json()) == 0:
                 self._logger.warning(
-                    f"User {user['id']} does not have any enrolled factors."
+                    f"User {user_id} does not have any enrolled factors."
                 )
             elif len(response.json()) > 0:
                 self._logger.debug(
-                    f"Successfully fetched {len(response.json())} factors for user {user['id']}"
+                    f"Successfully fetched {len(response.json())} factors for user {user_id}"
                 )
             return response.json()
 
         except requests.exceptions.RequestException as req_error:
             self._logger.error(
-                f"Error occurred fetching user factors for user {user['id']}"
+                f"Error occurred fetching user factors for user {user_id}"
             )
             raise req_error
         except Exception as error:
             self._logger.error(
-                f"Error occurred fetching user factors for user {user['id']}"
+                f"Error occurred fetching user factors for user {user_id}"
             )
             raise error
 
