@@ -11,7 +11,7 @@ If you only need specifc user objects and know their user id, you can call ```Ok
 ### Getting factors for all users
 Much like the property ```OktaManagementFramework.users```, you can invoke the class to retrieve all user factors by referencing the property ```OktaManagementFramework.user_factors```. __This takes a while to run as it has to retreive all okta users (if not already populated by ```OktaManagementFramework.users```) and then one by one get each user's factors. Sure, some concurrency would have been nice here, but damn rate limits__.
 ### Getting factors for a singular user
-You can make a call to ```OktaManagementFramework.fetch_user_factors(user: dict)``` to get the factors for a singular user. I need to re-write this function, though, as right now it requires you to pass the full user object (which you can get by calling ```OktaManagementFramework.fetch_user_by_id(user_id)```), instead of just accepting a user id. Not sure what I was thinking, but still, you _can_ use this to get factors for one user if you want. 
+You can make a call to ```OktaManagementFramework.fetch_user_factors(user_id: str)``` to get the factors for a singular user, where user_id is the Okta user ID of the user you wish to return factors for.
 ### Unenroll a particular factor
 You can unenroll a users factor by called ```OktaManagementFramework.unenroll_user_factor(user_id, factor_id)```.
 ### Enrolling a new push factor
