@@ -79,9 +79,10 @@ Make a call to ```OktaManagementFramework.get_okta_system_log_events(since: None
 
 5. Build package from within cloned repo
 
-```python -m build --wheels```
+```python -m build --wheel```
 
 6. Install OktaManagementFramework using pip from within root directory of OktaManagementFramework
+   
 ```pip install .``` 
 
 # Quick start
