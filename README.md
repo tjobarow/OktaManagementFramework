@@ -89,7 +89,7 @@ Make a call to ```OktaManagementFramework.get_okta_system_log_events(since: None
 ## Import package
 Import the package
 
-```from OktaManagementFramework import OktaManagementFramework```
+```from okta_management_framework import OktaManagementFramework```
 
 ## Create new instance
 Then, create a new instance of OktaManagementFramework, passing it the required parameters:
@@ -104,7 +104,16 @@ If you want to explicitly provide a Python logging.Logger object for the class t
 
 ```okta = OktaManagementFramework(okta_domain="mycompany",api_token="TOKEN FROM OKTA",logger=logging.getLogger("my-logger"))```
 
-## Optional: Set IS_TESTING flag to true to force class to return less Okta objects
+## Optional: Set IS_TESTING flag to true and provide TESTING_COUNT_THRESHOLD integer value to force class to return less Okta objects
 If you are wanting to have OktaManagementFramework return less overall users, devices, etc. This can help you when you need to test and do not want to wait hours for it to return 10k user objects. Set IS_TESTING=True when you create the class:
 
 ```okta = OktaManagementFramework(okta_domain="mycompany",api_token="TOKEN FROM OKTA",IS_TESTING=True)```
+
+Additionally, you can set the max number of objects to return by providing an integer value to TESTING_COUNT_THRESHOLD during class construction:
+
+```okta = OktaManagementFramework(okta_domain="mycompany",api_token="TOKEN FROM OKTA",IS_TESTING=True,TESTING_COUNT_THRESHOLD=2000)```
+
+## Optional: Set the ONLY_ACTIVE_USERS flag to true to only return active users
+If you set the ONLY_ACTIVE_USERS flag to during during class construction, OktaManagementFramework.users will only return Okta user cccounts that are ACTIVE.
+
+```okta = OktaManagementFramework(okta_domain="mycompany",api_token="TOKEN FROM OKTA", ONLY_ACTIVE_USERS=True)```

@@ -59,7 +59,7 @@ class OktaManagementFramework:
         # that exist in Okta for that resource type (such as getting all users for
         # every SINGLE device in Okta).
         self.__IS_TESTING: bool = IS_TESTING
-        self.__TESTING_COUNT_THRESHOLD: int = TESTING_COUNT_THRESHOLD
+        self.__TESTING_COUNT_THRESHOLD: int = (TESTING_COUNT_THRESHOLD - 400)
 
         # DEVICE RELATED PROTECTED/PRIVATE CLASS FIELDS
         self.__devices: list[dict] = None

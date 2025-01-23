@@ -2,8 +2,8 @@ from setuptools import setup
 
 setup(
     name="OktaManagementFramework",
-    version="1.21",
-    py_modules=['OktaManagementFramework'],
+    version="1.23",
+    py_modules=['okta_management_framework'],
     install_requires=[
         "certifi==2024.12.14",
         "charset-normalizer==3.4.0",
