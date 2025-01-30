@@ -694,7 +694,7 @@ class OktaManagementFramework:
                     f"#{(users.index(user))+1}/{len(users)}: Fetching enrolled factors for {user['id']}"
                 )
                 user_factors.append(
-                    {"user": user, "factors": self.fetch_user_factors(user=user)}
+                    {"user": user, "factors": self.fetch_user_factors(user_id=user['id'])}
                 )
             except requests.exceptions.RequestException as req_error:
                 self._logger.error(req_error)
