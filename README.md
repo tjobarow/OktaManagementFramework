@@ -11,7 +11,7 @@ If you only need specifc user objects and know their user id, you can call ```Ok
 ### Getting factors for all users
 Much like the property ```OktaManagementFramework.users```, you can invoke the class to retrieve all user factors by referencing the property ```OktaManagementFramework.user_factors```. __This takes a while to run as it has to retreive all okta users (if not already populated by ```OktaManagementFramework.users```) and then one by one get each user's factors. Sure, some concurrency would have been nice here, but damn rate limits__.
 ### Getting factors for a singular user
-You can make a call to ```OktaManagementFramework.fetch_user_factors(user: dict)``` to get the factors for a singular user. I need to re-write this function, though, as right now it requires you to pass the full user object (which you can get by calling ```OktaManagementFramework.fetch_user_by_id(user_id)```), instead of just accepting a user id. Not sure what I was thinking, but still, you _can_ use this to get factors for one user if you want. 
+You can make a call to ```OktaManagementFramework.fetch_user_factors(user_id: str)``` to get the factors for a singular user, where user_id is the Okta user ID of the user you wish to return factors for.
 ### Unenroll a particular factor
 You can unenroll a users factor by called ```OktaManagementFramework.unenroll_user_factor(user_id, factor_id)```.
 ### Enrolling a new push factor
@@ -89,7 +89,7 @@ Make a call to ```OktaManagementFramework.get_okta_system_log_events(since: None
 ## Import package
 Import the package
 
-```from OktaManagementFramework import OktaManagementFramework```
+```from okta_management_framework import OktaManagementFramework```
 
 ## Create new instance
 Then, create a new instance of OktaManagementFramework, passing it the required parameters:
@@ -104,7 +104,16 @@ If you want to explicitly provide a Python logging.Logger object for the class t
 
 ```okta = OktaManagementFramework(okta_domain="mycompany",api_token="TOKEN FROM OKTA",logger=logging.getLogger("my-logger"))```
 
-## Optional: Set IS_TESTING flag to true to force class to return less Okta objects
+## Optional: Set IS_TESTING flag to true and provide TESTING_COUNT_THRESHOLD integer value to force class to return less Okta objects
 If you are wanting to have OktaManagementFramework return less overall users, devices, etc. This can help you when you need to test and do not want to wait hours for it to return 10k user objects. Set IS_TESTING=True when you create the class:
 
 ```okta = OktaManagementFramework(okta_domain="mycompany",api_token="TOKEN FROM OKTA",IS_TESTING=True)```
+
+Additionally, you can set the max number of objects to return by providing an integer value to TESTING_COUNT_THRESHOLD during class construction:
+
+```okta = OktaManagementFramework(okta_domain="mycompany",api_token="TOKEN FROM OKTA",IS_TESTING=True,TESTING_COUNT_THRESHOLD=2000)```
+
+## Optional: Set the ONLY_ACTIVE_USERS flag to true to only return active users
+If you set the ONLY_ACTIVE_USERS flag to during during class construction, OktaManagementFramework.users will only return Okta user cccounts that are ACTIVE.
+
+```okta = OktaManagementFramework(okta_domain="mycompany",api_token="TOKEN FROM OKTA", ONLY_ACTIVE_USERS=True)```
